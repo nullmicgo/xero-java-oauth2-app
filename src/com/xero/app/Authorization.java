@@ -50,26 +50,8 @@ public class Authorization extends HttpServlet {
             throws ServletException, IOException {
 
         ArrayList<String> scopeList = new ArrayList<String>();
-        scopeList.add("openid");
-        scopeList.add("email");
-        scopeList.add("profile");
-        scopeList.add("offline_access");
-        scopeList.add("accounting.settings");
-        scopeList.add("accounting.transactions");
-        scopeList.add("accounting.contacts");
-        scopeList.add("accounting.journals.read");
-        scopeList.add("accounting.reports.read");
-        scopeList.add("accounting.attachments");
-        scopeList.add("projects");
-        scopeList.add("assets");
-        scopeList.add("payroll.employees");
-        scopeList.add("payroll.payruns");
-        scopeList.add("payroll.payslip");
-        scopeList.add("payroll.timesheets");
-        scopeList.add("payroll.settings");
-        // scopeList.add("payroll.payrollcalendars");
-        // scopeList.add("paymentservices");
-        // scopeList.add("payroll");
+        scopeList.add("bankfeeds");
+
         
         DataStoreFactory DATA_STORE_FACTORY = new MemoryDataStoreFactory();
         AuthorizationCodeFlow flow = new AuthorizationCodeFlow.Builder(BearerToken.authorizationHeaderAccessMethod(),
