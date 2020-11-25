@@ -51,10 +51,15 @@ public class Callback extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        System.out.println("====== Callback doGet Start===========");
+        
         String code = "123";
         if (request.getParameter("code") != null) {
             code = request.getParameter("code");
         }
+
+        System.out.println("code ="+code);
 
         ArrayList<String> scopeList = new ArrayList<String>();
         scopeList.add("bankfeeds");
@@ -63,13 +68,23 @@ public class Callback extends HttpServlet {
         
         DataStoreFactory DATA_STORE_FACTORY = new MemoryDataStoreFactory();
 
+        System.out.println("code ="+code);
+
         AuthorizationCodeFlow flow = new AuthorizationCodeFlow.Builder(BearerToken.authorizationHeaderAccessMethod(),
                 HTTP_TRANSPORT, JSON_FACTORY, new GenericUrl(TOKEN_SERVER_URL),
                 new ClientParametersAuthentication(clientId, clientSecret), clientId, AUTHORIZATION_SERVER_URL)
                 .setScopes(scopeList).setDataStoreFactory(DATA_STORE_FACTORY).build();
 
+        
+        System.out.println("===== Callback/TokenResponse start======");
+
         TokenResponse tokenResponse = flow.newTokenRequest(code).setRedirectUri(redirectURI).execute();
 
+        System.out.println("Token Response - access_token = "+tokenResponse.getAccessToken());
+        System.out.println("Token Response - expires_in_seconds = "+tokenResponse.getExpiresInSeconds().toString());
+
+        
+        
         HttpTransport httpTransport = new NetHttpTransport();
         JsonFactory jsonFactory = new JacksonFactory();
         GoogleCredential credential = new GoogleCredential.Builder().setTransport(httpTransport)
@@ -94,5 +109,8 @@ public class Callback extends HttpServlet {
         store.saveItem(response, "xero_tenant_id", connection.get(0).getTenantId().toString());
 
         response.sendRedirect("./AuthenticatedResource");
+        
+        System.out.println("====== Callback doGet END ===========");
+
     }
 }
