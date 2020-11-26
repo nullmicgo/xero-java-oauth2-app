@@ -80,9 +80,20 @@ public class Callback extends HttpServlet {
 
         TokenResponse tokenResponse = flow.newTokenRequest(code).setRedirectUri(redirectURI).execute();
 
-        System.out.println("Token Response - access_token = "+tokenResponse.getAccessToken());
-        System.out.println("Token Response - expires_in_seconds = "+tokenResponse.getExpiresInSeconds().toString());
 
+        
+        System.out.println("Token Response - jwt_token  ="+ tokenResponse.toPrettyString());
+        System.out.println("Token Response - access_token  ="+  tokenResponse.getAccessToken());
+        System.out.println("Token Response - refresh_token  ="+  tokenResponse.getRefreshToken());
+        System.out.println("Token Response - expires_in_seconds  ="+  tokenResponse.getExpiresInSeconds().toString());
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         HttpTransport httpTransport = new NetHttpTransport();
